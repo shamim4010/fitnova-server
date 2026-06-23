@@ -76,7 +76,14 @@ async function run() {
 
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
     } finally {
-        await client.close();
+        /* await client.close(); */
     }
 }
 run().catch(console.dir);
+
+app.get('/', (req, res) => {
+  res.send("Hello world");
+})
+
+app.listen(PORT, () => {
+  console.log('shamim islam')})
