@@ -30,21 +30,42 @@ async function run() {
 
         app.get('/all-classes', async (req, res) => {
             const cursor = classes.find();
-            const results = await cursor.toArray();
-            res.send(results);
+            const result = await cursor.toArray();
+            res.send(result);
         })
 
         app.get('/all-classes/:id', async (req, res) => {
             const { id } = req.params
             const query = { _id: new ObjectId(id) };
-            const results = await classes.findOne(query);
-            res.send(results);
+            const result = await classes.findOne(query);
+            res.send(result);
+        })
+
+        app.post('/all-classes', async (req, res) => {
+            const allClasses = req.body
+            const result = await classes.insertOne(allClasses).toArray();
+            res.json(result)
+        })
+
+        app.delete('/all-classes/:userId', async (req, res) => {
+            const { user_id } = req.params
+            const result = await all - classes.deleteOne({ userId: user_id }).toArray();
+            res.json(result)
+        })
+
+        app.patch('/all-classes/:id', async (req, res) => {
+            const { id } = req.params
+            const classUpdate = req.body
+            const result = await classes.updateOne(
+                { _id: new ObjectId(id) }, { $set: classUpdate }
+            )
+            res.json(result);
         })
 
         app.get('/booking/:userId', async (req, res) => {
             const { userId } = req.params
-            const results = await bookings.find({ userId: userId }).toArray();
-            res.json(results);
+            const result = await bookings.find({ userId: userId }).toArray();
+            res.json(result);
         })
 
         app.post('/booking', async (req, res) => {
